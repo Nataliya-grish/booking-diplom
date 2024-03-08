@@ -2,46 +2,16 @@ import { Injectable, BadRequestException, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/users.schema';
-import { IUserService } from './interface/users.interface';
-import { ID } from './interface/users.interface';
-import { SearchUserParams } from './interface/search-users.interface';
-import { RegExpSearchParams } from './dto/search-user.dto';
+import { IUserService , ID } from './interface/users.interface';
+import { SearchUserParams } from './interface/search-user.interface';
+
 
 
 @Injectable()
-export class UserService implements IUserService {
+export class UsersService implements IUserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async findAll(params: SearchUserParams): Promise<User[]> {
-    function filterMatchedParams(params: SearchUserParams) {
-      const { email, name, contactPhone } = params;
-      const matchParam: RegExpSearchParams = {};
-
-      if (email) {
-        matchParam.email = { $regex: new RegExp(email, 'gi') };
-      }
-      if (name) {
-        matchParam.name = { $regex: new RegExp(name, 'gi') };
-      }
-      if (contactPhone) {
-        matchParam.contactPhone = { $regex: new RegExp(contactPhone, 'gi') };
-      }
-      return matchParam;
-    }
-
-    try {
-      const matchParam = filterMatchedParams(params);
-      const { offset, limit } = params;
-      return await this.userModel
-        .find(matchParam)
-        .skip(offset)
-        .limit(limit)
-        .exec();
-    } catch (error: any) {
-      throw new BadRequestException(error);
-    }
-  }
-
+  
   async create(data: Partial<User>): Promise<User> {
     try {
       const createdUser = new this.userModel(data);
@@ -76,4 +46,39 @@ export class UserService implements IUserService {
       throw new HttpException('Пользователь не найден', 404);
     }
   }
+	
+	async findAll(params: SearchUserParams)Promise<User[]> {
+    try {
+      let query = {};
+      if (params.email) {
+        query = { email: params.email };
+      } else if (params.name && params.contactPhone) {
+        query = {
+          $and: [
+            { name: { $regex: new RegExp(params.name, 'g') } },
+            { phone: { $regex: new RegExp(params.contactPhone, 'g') } },
+          ],
+        };
+      } else if (params.name) {
+        query = { name: { $regex: new RegExp(params.name, 'g') } };
+      } else if (params.contactPhone) {
+        query = { phone: { $regex: new RegExp(params.contactPhone, 'g') } };
+      }
+      const count = await this.userModel.count(query).exec();
+      const result = await this.userModel
+        .find(query)
+        .skip(params.offset)
+        .limit(params.limit)
+        .select(['-__v', '-password'])
+        .exec();
+
+        return {count, result}
+    } catch (err) {
+		 throw new BadRequestException(err);
+     
+	};
+    }
 }
+
+
+  

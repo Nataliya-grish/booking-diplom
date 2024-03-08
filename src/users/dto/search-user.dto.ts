@@ -21,9 +21,3 @@ export class SearchUserParams {
   @IsOptional()
   contactPhone: string;
 }
-
-export interface RegExpSearchParams {
-  name: { $regex: RegExp | string };
-  email: { $regex: RegExp | string };
-  contactPhone: { $regex: RegExp | string };
-}
