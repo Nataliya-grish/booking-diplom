@@ -47,37 +47,19 @@ export class UsersService implements IUserService {
     }
   }
 	
-	async findAll(params: SearchUserParams)Promise<User[]> {
-    try {
-      let query = {};
-      if (params.email) {
-        query = { email: params.email };
-      } else if (params.name && params.contactPhone) {
-        query = {
-          $and: [
-            { name: { $regex: new RegExp(params.name, 'g') } },
-            { phone: { $regex: new RegExp(params.contactPhone, 'g') } },
-          ],
-        };
-      } else if (params.name) {
-        query = { name: { $regex: new RegExp(params.name, 'g') } };
-      } else if (params.contactPhone) {
-        query = { phone: { $regex: new RegExp(params.contactPhone, 'g') } };
-      }
-      const count = await this.userModel.count(query).exec();
-      const result = await this.userModel
-        .find(query)
-        .skip(params.offset)
-        .limit(params.limit)
-        .select(['-__v', '-password'])
-        .exec();
-
-        return {count, result}
-    } catch (err) {
-		 throw new BadRequestException(err);
-     
-	};
-    }
+  async findAll(params: Partial<SearchUserParams>): Promise<User[]> {
+    const { limit, offset, email, name, contactPhone } = params;
+    const query = {
+      email: { $regex: new RegExp(email, 'i') },
+      name: { $regex: new RegExp(name, 'i') },
+      contactPhone: { $regex: new RegExp(contactPhone, 'i') },
+    };
+    return this.userModel
+      .find(query)
+      .limit(limit ?? 0)
+      .skip(offset ?? 0)
+      .select('email name contactPhone role');
+  }
 }
 
 
