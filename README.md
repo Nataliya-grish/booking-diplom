@@ -19,12 +19,37 @@
 
 #### Структура папок проэкта: #
 
-> beckend
->   - src
->     - users
+> fronte
+>    - public
+>    - src
+> src
+>    - auth
 >       - dto
+>       - guard
+>       - password
+>       - strategy
+>    - config
+>       - interfaces
+>    - decorators
+>    - hotels
+>       - dto
+>          - hotelDTO
+>          - roomDTO
+>       - interface
 >       - schema
->   - test
-> frontend
+>    - intereptor
+>    - reservation
+>       - dto
+>       - interfaces
+>       - schema
+>    - support
+>       - dto
+>       - interface
+>       - schema
+>    - users
+>       - dto
+>       - interface
+>       - schema
+>    - validation
 
 
