@@ -19,7 +19,7 @@
 
 #### Структура папок проэкта: #
 
-> fronte
+> frontend
 >    - public
 >    - src
 > src
@@ -44,6 +44,7 @@
 >       - schema
 >    - support
 >       - dto
+>       - filter
 >       - interface
 >       - schema
 >    - users
