@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import fetchData from './fetchData';
+import { RegData } from '../types/interfaces';
 
 export default function useFetchData() {
   const [usersLoading, setUsersLoading] = useState(true);
@@ -24,6 +25,10 @@ export default function useFetchData() {
   const authUser = {
     login(email: string, password: string) {
       const result = fetchData('auth/signin', { method: 'POST', data: { email, password } });
+      return result;
+    },
+    register(data: RegData) {
+      const result = fetchData('auth/signup', { method: 'POST', data });
       return result;
     }
   }

@@ -16,6 +16,23 @@ function FormAuth() {
   const authHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+
+      if (email.length === 0) {
+        iziToast.warning({
+          message: 'Введите почту!',
+          position: 'bottomCenter',
+        });
+        return;
+      }
+
+      if (password.length < 6) {
+        iziToast.warning({
+          message: 'Пароль должен содержать 6 и более символов!',
+          position: 'bottomCenter',
+        });
+        return;
+      }
+
       authUser.login(email, password)
         .then(result => {
           dispatch(login({ token: result.data.token }));
@@ -27,7 +44,7 @@ function FormAuth() {
         })
         .catch(err => {    
           iziToast.error({
-            message: err.data.message[0],
+            message: typeof err.data.message === 'string' ? err.data.message : err.data.message[0],
             position: 'bottomCenter',
           });
         });

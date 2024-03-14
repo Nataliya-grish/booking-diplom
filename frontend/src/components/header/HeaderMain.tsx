@@ -8,8 +8,8 @@ function HeaderMain() {
       <Navbar bg="white" expand="lg" className="mt-3 mb-4 shadow-sm rounded">
         <Container>
           <Link className="navbar-brand fw-bold text-uppercase" to="/">
-            <img srcSet="../src/assets/img/hotel.png" alt="FindHotels" />
-            Find Hotels
+            <img srcSet="../src/assets/hotel.png" alt="FindHotels" />
+            Найди свой отель у нас
           </Link>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">

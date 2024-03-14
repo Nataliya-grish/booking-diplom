@@ -4,7 +4,7 @@ import { getToken } from "../helpers/localStorage.helper";
 async function fetchData(url: string, opts: object, callback?: () => void): Promise<AxiosResponse> {
   return new Promise((resolve, reject) => {
     axios({
-      baseURL: `${process.env.MAIN_URL||'http://localhost:3000/api' }`,
+      baseURL: `${import.meta.env.VITE_MAIN_URL}`,
       url,
       headers: {
         Authorization: 'Bearer ' + (getToken() || ''),

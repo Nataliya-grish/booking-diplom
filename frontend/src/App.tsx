@@ -7,7 +7,7 @@ import HeaderMain from "./components/Header/HeaderMain";
 import { Col, Container, Row } from "react-bootstrap";
 import MenuMain from "./components/Menu/MenuMain";
 import UsersMain from "./components/Users/UsersMain";
-import HotelsList from "./components/Hotels/HotelsList/HotelsListMain";
+import HotelsListMain from "./components/Hotels/HotelsList/HotelsListMain";
 import HotelsSearch from "./components/Hotels/HotelsSearch/HotelsSearchMain";
 import HotelsAdd from "./components/Hotels/HotelsAdd/HotelsAddMain";
 import ErrorMain from "./components/Error/ErrorMain";
@@ -54,7 +54,7 @@ function App() {
           </Col>
           <Col sm={9}>
             <Routes>
-              <Route path="/" element={<HotelsList />} />
+              <Route path="/" element={<HotelsListMain />} />
               <Route path="/find-hotels" element={<HotelsSearch />} />
               <Route path="/add-hotels" element={<HotelsAdd />} />
               <Route path="/users" element={<UsersMain />} />
