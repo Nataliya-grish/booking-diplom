@@ -54,9 +54,9 @@ function App() {
           </Col>
           <Col sm={9}>
             <Routes>
-              <Route path="/" element={<HotelsListMain />} />
-              <Route path="/find-hotels" element={<HotelsSearch />} />
-              <Route path="/add-hotels" element={<HotelsAdd />} />
+              <Route path="/" element={<HotelsSearch />} />
+              <Route path="/all-hotels" element={<HotelsListMain />} />
+              <Route path="/add-hotel" element={<HotelsAdd />} />
               <Route path="/users" element={<UsersMain />} />
               <Route path="*" element={<ErrorMain />} />
             </Routes>

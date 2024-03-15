@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import fetchData from './fetchData';
-import { RegData } from '../types/interfaces';
+import { RegData, SearchHotelsDto } from '../types/interfaces';
 
 export default function useFetchData() {
   const [usersLoading, setUsersLoading] = useState(true);
@@ -33,7 +33,14 @@ export default function useFetchData() {
     }
   }
 
+  const hotelsAPI = {
+    search(searchParams: SearchHotelsDto) {
+      const result = fetchData('hotels', { method: 'GET', params: searchParams });
+      return result;
+    },
+  };
+
   return {
-    usersDB, authCheck, authUser
+    usersDB, authCheck, authUser, hotelsAPI
   };
 }

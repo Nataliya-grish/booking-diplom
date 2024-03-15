@@ -1,6 +1,7 @@
 import { Button, Col, Container, Figure, Row } from "react-bootstrap"
+import { HotelData } from "../../../types/interfaces";
 
-function HotelsListItem() {
+function HotelsListItem({ hotel }: { hotel: HotelData }) { 
   return (
     <Container className="bg-white rounded shadow-sm p-2 mt-3">
       <Container>
@@ -17,8 +18,8 @@ function HotelsListItem() {
             </Figure>
           </Col>
           <Col>
-            <p className="fs-3 text-uppercase">Название гостиницы</p>
-            <p className="text-muted">Описание отеля Описание отеля описание отеля опис ание отеля описание отеля опис ание отеля опис ание отеля опис ание отеля опис ание отеля опис ание отеля описа ние отеля опис ание отеля описание отеля описание отеля Описание отеля описание отеля опис ание отеля описание отеля опис ание отеля опис ание отеля опис ание отеля опис ание отеля опис ание отеля описа ние отеля опис ание отеля описание отеля описание отеля </p>
+          <p className="fs-3 text-uppercase">{hotel.title}</p>
+            <p className="text-muted">{hotel.description}</p>
             <Button>
               Подробнее
             </Button>

@@ -1,22 +1,30 @@
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { useState } from "react";
+import { Button, Form } from "react-bootstrap"
+import { useAppDispatch } from "../../../store/hooks";
+import { setHotelsState } from "../../../store/hotels/hotelsSlice";
 
 function HotelsSearchForm() {
+  const [title, setTitle] = useState<string>('');
+  const dispatch = useAppDispatch();
+
+  const searchHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+
+      dispatch(setHotelsState({ offset: 0, titleSearch: title }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
-    <Form className="mb-3">
-      <Form.Control type="text" className="mb-3" placeholder="Название отеля (необязательно)" />
-      <Row className="mb-3">
-        <Col>
-          <Form.Control type="date" placeholder="Заезд" required />
-        </Col>
-        <Col>
-          <Form.Control type="date" placeholder="Выезд" required />
-        </Col>
-      </Row>
-      <Button variant="primary" type="submit">
-        Найти
-      </Button>
-    </Form>
-  )
+    <Form className="mb-3" onSubmit={searchHandler}>
+    <Form.Control type="text" className="mb-3" placeholder="Название отеля" onChange={(e) => setTitle(e.target.value)} />
+    <Button variant="primary" type="submit">
+      Найти
+    </Button>
+  </Form>
+)
 }
+
 
 export default HotelsSearchForm
