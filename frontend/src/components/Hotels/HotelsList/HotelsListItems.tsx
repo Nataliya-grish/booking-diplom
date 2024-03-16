@@ -34,7 +34,7 @@ function HotelsListItems(data: propData) {
       ) : (
         <>
           {list.map(elem =>
-            <HotelsListItem key={elem._id} hotel={elem} />
+            <HotelsListItem key={elem._id} hotel={elem} showBtn={true}/>
           )}
           <Pagination className="mt-3">
             {hotelsState.offset > 0 && 

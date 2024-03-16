@@ -35,7 +35,7 @@ function FormAuth() {
 
       authUser.login(email, password)
         .then(result => {
-          dispatch(login({ token: result.data.token }));
+          dispatch(login({ token: result.data.token, role: result.data.role }));
           iziToast.success({
             message: 'Вы успешно авторизовались в системе',
             position: 'bottomCenter',

@@ -14,7 +14,7 @@ function HotelsListMain() {
 
   return (
     <>
-    <Container className="bg-white rounded shadow-sm p-2">
+    <Container className="bg-white rounded shadow-sm p-2 mb-3">
       <Container>
       <Stack direction="horizontal" gap={2}>
             <p className="fs-2 fw-semibold">Все гостиницы</p>

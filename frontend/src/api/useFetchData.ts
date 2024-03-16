@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import fetchData from './fetchData';
-import { RegData, SearchHotelsDto } from '../types/interfaces';
+import { RegData, SearchHotelsDto, SearchRoomsDto  } from '../types/interfaces';
 
 export default function useFetchData() {
   const [usersLoading, setUsersLoading] = useState(true);
@@ -10,14 +10,14 @@ export default function useFetchData() {
     getInfo() {
       setUsersLoading(true);
 
-      const result = fetchData('users/findall', { method: 'GET' }, () => setUsersLoading(false));
+      const result = fetchData('users/findall', { method: 'GET' }, false, () => setUsersLoading(false));
       return result;
     },
   };
 
   const authCheck = {
-    getInfo() {
-      const result = fetchData('auth/checkauth', { method: 'GET' });
+    getInfo(email: string) {
+      const result = fetchData('auth/checkauth', { method: 'GET', params: { email } });
       return result;
     }
   }
@@ -38,9 +38,36 @@ export default function useFetchData() {
       const result = fetchData('hotels', { method: 'GET', params: searchParams });
       return result;
     },
+    findById(id: string) {
+      const result = fetchData(`hotels/findhotel/${id}`, { method: 'GET' });
+      return result;
+    },
+    addHotel(data: FormData) {    
+      const result = fetchData('hotels', { method: 'POST', data }, true);
+      return result;
+    },
+    updateHotel(data: FormData, id: string) {
+      const result = fetchData(`hotels/${id}`, { method: 'PUT', data }, true);
+      return result;
+    }
+  };
+
+  const roomsApi = {
+    search(searchParams: SearchRoomsDto) {
+      const result = fetchData('rooms', { method: 'GET', params: searchParams });
+      return result;
+    },
+    addRoom(data: FormData) {    
+      const result = fetchData('rooms', { method: 'POST', data }, true);
+      return result;
+    },
+    updateRoom(data: FormData, id: string) {
+      const result = fetchData(`rooms/${id}`, { method: 'PUT', data }, true);
+      return result;
+    }
   };
 
   return {
-    usersDB, authCheck, authUser, hotelsAPI
+    usersDB, authCheck, authUser, hotelsAPI, roomsApi
   };
 }

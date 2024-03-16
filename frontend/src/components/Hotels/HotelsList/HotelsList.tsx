@@ -20,8 +20,12 @@ function HotelsList() {
     hotelsAPI.search({
       limit: hotelsState.limit, offset: hotelsState.offset, title: hotelsState.titleSearch,
     })
-      .then(result => {       
+    .then(result => {  
+      if (result.data.length > 0) {
         dispatch(setHotelsState({ list: result.data, loading: false }));
+      } else {
+        dispatch(setHotelsState({ offset: 0, loading: false }));
+      }
       })
       .catch(err => {
         setError(true);

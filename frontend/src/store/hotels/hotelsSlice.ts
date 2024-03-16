@@ -7,6 +7,7 @@ interface HotelsState {
   titleSearch: string,
   loading: boolean,
   list: HotelData[],
+  currentHotel: HotelData,
 }
 
 const initialState: HotelsState = {
@@ -15,6 +16,12 @@ const initialState: HotelsState = {
   titleSearch: '',
   loading: false,
   list: [],
+  currentHotel: {
+    _id: '',
+    title: '',
+    description: '',
+    images: [],
+  },
 }
 
 const hotelsSlice = createSlice({

@@ -17,6 +17,7 @@ export interface HotelData {
     _id: string;
     title: string;
     description: string;
+    images: string[];
 }
 
 export interface SearchHotelsDto {
@@ -24,3 +25,20 @@ export interface SearchHotelsDto {
     offset?: number;
     title?: string;
 }
+
+export interface HotelRoomData {
+    _id: string,
+    hotel: string;
+    title: string;
+    description: string;
+    images: string[];
+    isEnabled: boolean;
+  }
+
+  export interface SearchRoomsDto {
+    hotel: string;
+    limit?: number;
+    offset?: number;
+    title?: string;
+    isEnabled?: boolean;
+  }

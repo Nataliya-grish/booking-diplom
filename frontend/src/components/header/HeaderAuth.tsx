@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap"
+import { Container, Button } from "react-bootstrap"
 import { useAuth } from "../../hooks/useAuth"
 import ButtonLogout from "./ButtonLogout";
 import { useState } from "react";
@@ -12,7 +12,13 @@ function HeaderAuth() {
   return (
     <Container>
       {isAuth === true ? (
-        <ButtonLogout />
+         <div className="d-flex flex-column">
+         <Button variant="primary" className="mb-1">
+           Мои брони
+         </Button>
+         <ButtonLogout />
+       </div>
+
       ) : (
         authForm === true ? (
           <>
