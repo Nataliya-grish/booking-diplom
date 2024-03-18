@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../store/user/userSlice";
+import { logout } from "../../store/userSlice";
 import iziToast from "izitoast";
 
 function ButtonLogout() {

@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { RegData } from "../../types/interfaces";
 import useFetchData from "../../api/useFetchData";
 import { useAppDispatch } from "../../store/hooks";
-import { login } from "../../store/user/userSlice";
+import { login } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom"
 
 function FormRegister() {
@@ -47,7 +47,7 @@ function FormRegister() {
 
       authUser.register(regData)
         .then(result => {
-          dispatch(login({ token: result.data.token, role: result.data.role }));
+          dispatch(login({access_token: result.data.token, role: result.data.role, id: result.data.id }));
           iziToast.success({
             message: 'Вы успешно зарегистрировались',
             position: 'bottomCenter',
@@ -61,7 +61,7 @@ function FormRegister() {
           });
         });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

@@ -16,6 +16,7 @@ function HeaderMain() {
             <OverlayTrigger
               trigger="click"
               placement="bottom"
+              rootClose={true}
               overlay={
                 <Popover>
                   <Popover.Header as="h3">Профиль</Popover.Header>

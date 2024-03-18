@@ -1,4 +1,4 @@
-module.exports = {
+docermodule.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',

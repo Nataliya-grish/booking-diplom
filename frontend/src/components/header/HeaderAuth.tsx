@@ -4,18 +4,23 @@ import ButtonLogout from "./ButtonLogout";
 import { useState } from "react";
 import FormAuth from "./FormAuth";
 import FormRegister from "./FormRegister";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks";
 
 function HeaderAuth() {
   const isAuth = useAuth();
   const [authForm, setAuthForm] = useState(true);
+  const userId = useAppSelector(state => state.user.id);
 
   return (
     <Container>
       {isAuth === true ? (
          <div className="d-flex flex-column">
-         <Button variant="primary" className="mb-1">
-           Мои брони
-         </Button>
+          <Link to={`/reservations?id=${userId}`} className="mb-1 text-decoration-none">
+            <Button variant="primary" >
+              Мои брони
+            </Button>
+          </Link>
          <ButtonLogout />
        </div>
 

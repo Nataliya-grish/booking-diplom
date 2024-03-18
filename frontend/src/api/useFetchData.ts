@@ -1,25 +1,23 @@
-import { useState } from 'react';
 import fetchData from './fetchData';
-import { RegData, SearchHotelsDto, SearchRoomsDto  } from '../types/interfaces';
+import {
+  RegData,
+  SearchHotelsDto,
+  SearchRoomsDto,
+  SearchUsersDto,
+  AddReservationDto,
+  SearchReservationsDto,
+} from '../types/interfaces';
 
 export default function useFetchData() {
-  const [usersLoading, setUsersLoading] = useState(true);
-
-  const usersDB = {
-    loading: usersLoading,
-    getInfo() {
-      setUsersLoading(true);
-
-      const result = fetchData('users/findall', { method: 'GET' }, false, () => setUsersLoading(false));
+  const usersApi = {
+    search(searchParams: Partial<SearchUsersDto>) {
+      const result = fetchData('users', { method: 'GET', params: searchParams });
       return result;
     },
-  };
-
-  const authCheck = {
-    getInfo(email: string) {
-      const result = fetchData('auth/checkauth', { method: 'GET', params: { email } });
+    updateRole(id: string, role: string) {
+    const result = fetchData(`users/${id}`, { method: 'PUT', data: { role } });
       return result;
-    }
+    },
   }
 
   const authUser = {
@@ -30,7 +28,11 @@ export default function useFetchData() {
     register(data: RegData) {
       const result = fetchData('auth/signup', { method: 'POST', data });
       return result;
-    }
+    },
+    getInfo(email: string) {
+    const result = fetchData('auth/checkauth', { method: 'GET', params: { email } });
+    return result;
+    },
   }
 
   const hotelsAPI = {
@@ -49,7 +51,7 @@ export default function useFetchData() {
     updateHotel(data: FormData, id: string) {
       const result = fetchData(`hotels/${id}`, { method: 'PUT', data }, true);
       return result;
-    }
+    },
   };
 
   const roomsApi = {
@@ -64,10 +66,26 @@ export default function useFetchData() {
     updateRoom(data: FormData, id: string) {
       const result = fetchData(`rooms/${id}`, { method: 'PUT', data }, true);
       return result;
-    }
+    },
   };
 
+  const reservationsApi = {
+    search(searchParams: SearchReservationsDto) {
+      const result = fetchData('reservations', { method: 'GET', params: searchParams });
+      return result;
+    },
+    addReservation(data: AddReservationDto) {
+      const result = fetchData('reservations', { method: 'POST', data });
+      return result;
+    },
+    removeReservation(reservationId: string, userId: string | null) {
+      const result = fetchData(`reservations/${reservationId}`, { method: 'DELETE', data: { userId } });
+      return result;
+    },
+  }
+
+
   return {
-    usersDB, authCheck, authUser, hotelsAPI, roomsApi
+    usersApi, authUser, hotelsAPI, roomsApi, reservationsApi
   };
 }

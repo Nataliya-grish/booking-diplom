@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap"
 import { useAppDispatch } from "../../../store/hooks";
-import { setHotelsState } from "../../../store/hotels/hotelsSlice";
+import { setHotelsState } from "../../../store/hotelsSlice";
 
 function HotelsSearchForm() {
   const [title, setTitle] = useState<string>('');
@@ -13,7 +13,7 @@ function HotelsSearchForm() {
 
       dispatch(setHotelsState({ offset: 0, titleSearch: title }));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
   return (

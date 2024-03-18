@@ -17,7 +17,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
         isGlobal: true,
         load: [configuration],
       }),
-	  MongooseModule.forRoot(process.env.MONGO_CONNECTION),
+	  MongooseModule.forRoot(process.env.MONGO_CONNECTION || "mongodb://localhost:27017/hotels"),
 	  UsersModule,
 	  AuthModule,
 	  HotelsModule,

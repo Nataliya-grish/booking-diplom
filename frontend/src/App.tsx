@@ -14,40 +14,42 @@ import ErrorMain from "./components/Error/ErrorMain";
 import { useAppDispatch } from "./store/hooks";
 import { getToken } from "./helpers/localStorage.helper";
 import useFetchData from "./api/useFetchData";
-import { login, logout } from "./store/user/userSlice";
+import { login, logout } from "./store/userSlice";
 import { useEffect } from "react";
 import HotelPageMain from "./components/Hotels/HotelPage/HotelPageMain";
 import HotelsRoomsAddMain from "./components/Hotels/HotelsRoomsAdd/HotelsRoomsAddMain";
 import HotelsUpdateMain from "./components/Hotels/HotelsUpdate/HotelsUpdateMain";
 import HotelRoomUpdateMain from "./components/Hotels/HotelRoomUpdate/HotelRoomUpdateMain";
+import ReservationsMain from "./components/Reservations/ReservationsMain";
+import ReservationsForm from "./components/Reservations/ReservationsForm";
 
 
 
 function App() {
   const dispatch = useAppDispatch();
-  const { authCheck } = useFetchData();
+  const { authUser } = useFetchData();
 
   const checkAuth = async () => {
-    const token = getToken();
+    const access_token = getToken();
 
     try {
-      if (token) {
-        const base64Url = token.split('.')[1];
+      if (access_token) {
+        const base64Url = access_token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         const { email } = JSON.parse(jsonPayload);
-        authCheck.getInfo(email)
+        authUser.getInfo(email)
           .then(result => {
-            dispatch(login({ token, role: result.data.role }));
+            dispatch(login({access_token, role: result.data.role, id: result.data.id}));
           })
           .catch(() => {
             dispatch(logout());
           })
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -72,6 +74,8 @@ function App() {
               <Route path="/update-room" element={<HotelRoomUpdateMain />} />
               <Route path="/users" element={<UsersMain />} />
               <Route path="/hotel" element={<HotelPageMain />} />
+              <Route path="/reservations" element={<ReservationsMain />} />
+              <Route path="/reserve-room" element={<ReservationsForm />} />
               <Route path="*" element={<ErrorMain />} />
             </Routes>
           </Col>

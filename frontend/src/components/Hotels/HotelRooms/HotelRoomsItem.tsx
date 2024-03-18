@@ -4,7 +4,7 @@ import HotelRoomsItemImgs from "./HotelRoomsItemImgs";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import { useDispatch } from "react-redux";
-import { setRoomsState } from "../../../store/rooms/roomsSlice";
+import { setRoomsState } from "../../../store/roomsSlice";
 
 function HotelRoomsItem({ room }: { room: HotelRoomData }) {
   const role = useAppSelector(state => state.user.role);
@@ -20,10 +20,13 @@ function HotelRoomsItem({ room }: { room: HotelRoomData }) {
           <Col>
             <p className="fs-3 text-uppercase">{room.title}</p>
             <p className="text-muted">{room.description}</p>
+            <Link to={'/reserve-room'} className="text-decoration-none m-1">
+              <Button onClick={() => dispatch(setRoomsState({ currentRoom: room }))}>Забронировать</Button>
+            </Link>
             {role === 'admin' && 
-              <Link to={'/update-room'} className="text-decoration-none">
-                <Button variant="warning" className="mb-2" onClick={() => dispatch(setRoomsState({ currentRoom: room }))}>Редактировать</Button>
-              </Link>
+             <Link to={'/update-room'} className="text-decoration-none m-1">
+              <Button variant="warning" onClick={() => dispatch(setRoomsState({ currentRoom: room }))}>Редактировать</Button>
+             </Link>
             }
           </Col>
         </Row>

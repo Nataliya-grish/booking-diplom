@@ -1,46 +1,28 @@
 import { Container } from "react-bootstrap"
-import UsersList from "./UsersList"
-import { useEffect, useState } from "react";
-import { UserData } from "../../types/interfaces";
-import useFetchData from "../../api/useFetchData";
-import iziToast from "izitoast";
-import LoaderMain from "../Loader/LoaderMain";
+import UsersList from "./UsersList";
+import UsersSearchForm from "./UsersSearchForm"
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useEffect } from "react";
+import { setUsersState } from "../../store/usersSlice";
 
 function UsersMain() {
-  const [error, setError] = useState<boolean>(false);
-  const [list, updateList] = useState<UserData[]>([]);
-  const { usersDB } = useFetchData();
+  const dispatch = useAppDispatch();
+  const usersState = useAppSelector(state => state.users);
 
   useEffect(() => {
-    setError(false);
+    if (usersState.offset !== 0 || usersState.email.length !== 0 || usersState.name.length !== 0 || usersState.contactPhone.length !== 0) {
+      dispatch(setUsersState({ offset: 0, email: '', name: '', contactPhone: '' }));
+    }
 
-    usersDB.getInfo()
-      .then(result => {
-        updateList(result.data);
-      })
-      .catch(err => {    
-        setError(true);
-        iziToast.error({
-          message: err.data.message,
-          position: 'bottomCenter',
-        });
-      });
   }, []);
 
   return (
     <Container className="bg-white rounded shadow-sm p-2">
       <Container>
         <p className="fs-2 fw-semibold">Пользователи</p>
+        <UsersSearchForm />
       </Container>
-        {usersDB.loading ? (
-          <LoaderMain />
-        ) : (
-          error ? (
-            <p>Произошла ошибка при загрузке списка пользователей!</p>
-          ) : (
-            <UsersList list={list} />
-          )
-        )}
+      <UsersList />  
     </Container>
   )
 }

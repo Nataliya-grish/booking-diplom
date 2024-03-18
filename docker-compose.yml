@@ -18,7 +18,7 @@ services:
       - PORT=3000
       - MONGO_CONNECTION=url
       - JWT_SECRET=secret
-      - JJWT_EXPIRATION=3d
+      - JWT_EXPIRATION=3d
     depends_on:
       - mongodb
     networks:
@@ -45,4 +45,4 @@ services:
 
 networks:
     backend:
-      driver: bridge
+      driver: bridged

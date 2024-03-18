@@ -81,13 +81,13 @@ function HotelsAddForm() {
         })
         .catch(err => {
           iziToast.error({
-            message: err.data.message,
+            message: typeof err.data.message === 'string' ? err.data.message : err.data.message[0],
             position: 'bottomCenter',
           });
         });
 
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

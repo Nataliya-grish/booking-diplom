@@ -7,7 +7,7 @@ import LoaderMain from "../../Loader/LoaderMain";
 import HotelsListItem from "../HotelsList/HotelsListItem";
 import { Button, Container } from "react-bootstrap";
 import HotelRoomsList from "../HotelRooms/HotelRoomsList";
-import { setHotelsState } from "../../../store/hotels/hotelsSlice";
+import { setHotelsState } from "../../../store/hotelsSlice";
 
 function HotelPageMain() {
   const [error, setError] = useState<boolean>(false);
@@ -39,7 +39,7 @@ function HotelPageMain() {
       .catch(err => {
         setError(true);
         iziToast.error({
-          message: err.data.message,
+          message: typeof err.data.message === 'string' ? err.data.message : err.data.message[0],
           position: 'bottomCenter',
         });
       });

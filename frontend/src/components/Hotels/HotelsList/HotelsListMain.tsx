@@ -2,11 +2,13 @@ import { Button, Container, Stack } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import HotelsList from "./HotelsList"
 import { useEffect } from "react"
-import { useAppDispatch } from "../../../store/hooks"
-import { setHotelsState } from "../../../store/hotels/hotelsSlice"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setHotelsState } from "../../../store/hotelsSlice"
 
 function HotelsListMain() {
   const dispatch = useAppDispatch();
+  const role = useAppSelector(state => state.user.role)
+
 
   useEffect(() => {
     dispatch(setHotelsState({ offset: 0, titleSearch: '' }));
@@ -18,9 +20,11 @@ function HotelsListMain() {
       <Container>
       <Stack direction="horizontal" gap={2}>
             <p className="fs-2 fw-semibold">Все гостиницы</p>
-            <Link to={'/add-hotel'} className="ms-auto">
-              <Button variant="success">Добавить гостиницу</Button>
-            </Link>
+            {role === 'admin' &&
+              <Link to={'/add-hotel'} className="ms-auto">
+                <Button variant="success">Добавить гостиницу</Button>
+              </Link>
+            }
           </Stack>
       </Container>
     </Container>

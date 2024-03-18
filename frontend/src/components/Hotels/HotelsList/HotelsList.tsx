@@ -3,7 +3,7 @@ import useFetchData from "../../../api/useFetchData";
 import iziToast from "izitoast";
 import LoaderMain from "../../Loader/LoaderMain";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setHotelsState } from "../../../store/hotels/hotelsSlice";
+import { setHotelsState } from "../../../store/hotelsSlice";
 import HotelsListItems from "./HotelsListItems"
 
 function HotelsList() {
@@ -30,7 +30,7 @@ function HotelsList() {
       .catch(err => {
         setError(true);
         iziToast.error({
-          message: err.data.message,
+          message: typeof err.data.message === 'string' ? err.data.message : err.data.message[0],
           position: 'bottomCenter',
         });
       });

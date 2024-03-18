@@ -1,7 +1,7 @@
 import { Container, Pagination } from "react-bootstrap"
 import { HotelRoomData } from "../../../types/interfaces";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setHotelsState } from "../../../store/hotels/hotelsSlice";
+import { setHotelsState } from "../../../store/hotelsSlice";
 import HotelRoomsItem from "./HotelRoomsItem";
 
 interface propData {
@@ -21,8 +21,8 @@ function HotelRoomsItems(data: propData) {
         dispatch(setHotelsState({ offset: roomsState.offset - roomsState.limit }));
       }
     } catch (error) {
-      console.log(error);
-    }
+      console.error(error);
+     }
   }
 
   return (
