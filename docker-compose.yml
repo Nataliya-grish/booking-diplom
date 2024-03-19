@@ -41,8 +41,6 @@ services:
 
 
 
-
-
 networks:
     backend:
-      driver: bridged
+      driver: bridge

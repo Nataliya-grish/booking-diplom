@@ -71,3 +71,41 @@ export interface HotelRoomData {
     dateStart: string,
     dateEnd: string,
   }
+
+  export interface CreateSupportRequestDto {
+    userId: string | null;
+    text: string;
+  }
+  
+  export interface GetChatListParams {
+    userId: string | null;
+    isActive: boolean;
+  }
+  
+  export interface SendMessageDto {
+    authorId: string;
+    supportRequestId: string;
+    text: string;
+  }
+  
+  export interface MarkMessagesAsReadDto {
+    userId: string;
+    supportRequestId: string;
+    createdBefore: Date;
+  }
+  
+  export interface SupportRequestData {
+    _id: string;
+    userId: UserData;
+    messages: MessageData;
+    isActive: boolean;
+    createdAt: Date;
+  }
+  
+  export interface MessageData {
+    _id: string;
+    authorId: string;
+    text: string;
+    sentAt: Date;
+    readAt: Date;
+  }

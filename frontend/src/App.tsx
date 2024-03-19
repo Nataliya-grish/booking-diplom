@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-import HeaderMain from "./components/Header/HeaderMain";
 import { Col, Container, Row } from "react-bootstrap";
+import HeaderMain from "./components/Header/HeaderMain";
 import MenuMain from "./components/Menu/MenuMain";
 import UsersMain from "./components/Users/UsersMain";
 import HotelsListMain from "./components/Hotels/HotelsList/HotelsListMain";
@@ -15,17 +16,20 @@ import { useAppDispatch } from "./store/hooks";
 import { getToken } from "./helpers/localStorage.helper";
 import useFetchData from "./api/useFetchData";
 import { login, logout } from "./store/userSlice";
-import { useEffect } from "react";
 import HotelPageMain from "./components/Hotels/HotelPage/HotelPageMain";
 import HotelsRoomsAddMain from "./components/Hotels/HotelsRoomsAdd/HotelsRoomsAddMain";
 import HotelsUpdateMain from "./components/Hotels/HotelsUpdate/HotelsUpdateMain";
 import HotelRoomUpdateMain from "./components/Hotels/HotelRoomUpdate/HotelRoomUpdateMain";
 import ReservationsMain from "./components/Reservations/ReservationsMain";
 import ReservationsForm from "./components/Reservations/ReservationsForm";
-
+import ChatMain from "./components/Chat/ChatMain";
+import SupportMain from "./components/Support/SupportMain";
+import { SocketClient } from "./socket/SocketClient";
 
 
 function App() {
+  SocketClient();
+
   const dispatch = useAppDispatch();
   const { authUser } = useFetchData();
 
@@ -76,6 +80,8 @@ function App() {
               <Route path="/hotel" element={<HotelPageMain />} />
               <Route path="/reservations" element={<ReservationsMain />} />
               <Route path="/reserve-room" element={<ReservationsForm />} />
+              <Route path="/requests" element={<SupportMain />} />
+              <Route path="/chat" element={<ChatMain />} />
               <Route path="*" element={<ErrorMain />} />
             </Routes>
           </Col>

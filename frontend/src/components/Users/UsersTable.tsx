@@ -1,10 +1,10 @@
-import { Button, Container, Dropdown, DropdownButton, Pagination, Table } from "react-bootstrap";
-import { UserData } from "../../types/interfaces";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setUsersState } from "../../store/usersSlice";
-import useFetchData from "../../api/useFetchData";
 import iziToast from "izitoast";
+import { Button, Container, Dropdown, DropdownButton, Pagination, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useFetchData from "../../api/useFetchData";
+import { setUsersState } from "../../store/usersSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { UserData } from "../../types/interfaces";
 
 interface propData {
   list: UserData[],

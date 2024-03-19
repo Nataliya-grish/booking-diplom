@@ -3,6 +3,7 @@ import userReducer from './userSlice';
 import hotelReducer from './hotelsSlice';
 import roomsReducer from './roomsSlice';
 import usersReducer from './usersSlice';
+import socketIOReducer from './socketSlice';
 
 export const store: any = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store: any = configureStore({
       hotels: hotelReducer,
       rooms: roomsReducer,
       users: usersReducer,
+      socketIO: socketIOReducer,
     },
 });
 

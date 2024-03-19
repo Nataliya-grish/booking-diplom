@@ -6,6 +6,10 @@ import {
   SearchUsersDto,
   AddReservationDto,
   SearchReservationsDto,
+  CreateSupportRequestDto,
+  GetChatListParams,
+  SendMessageDto,
+  MarkMessagesAsReadDto
 } from '../types/interfaces';
 
 export default function useFetchData() {
@@ -83,9 +87,34 @@ export default function useFetchData() {
       return result;
     },
   }
-
+  const supportRequestApi = {
+    createRequest(data: CreateSupportRequestDto) {
+      const result = fetchData('support', { method: 'POST', data });
+      return result;
+    },
+    findRequests(searchParams: GetChatListParams) {
+      const result = fetchData('support', { method: 'GET', params: searchParams });
+      return result;
+    },
+    sendMessage(data: SendMessageDto) {
+      const result = fetchData('support/sendmessage', { method: 'POST', data });
+      return result;
+    },
+    getMessages(supportRequestId: string, userId: string) {
+      const result = fetchData(`support/getmessages/${supportRequestId}`, { method: 'GET', params: { userId } });
+      return result;
+    },
+    readMessages(data: MarkMessagesAsReadDto) {
+      const result = fetchData('support/readmessages', { method: 'POST', data });
+      return result;
+    },
+    closeRequest(supportRequestId: string) {
+      const result = fetchData(`support/closerequest/${supportRequestId}`, { method: 'POST' });
+      return result;
+    },
+  }
 
   return {
-    usersApi, authUser, hotelsAPI, roomsApi, reservationsApi
+    usersApi, authUser, hotelsAPI, roomsApi, reservationsApi, supportRequestApi
   };
 }
